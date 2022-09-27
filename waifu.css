@@ -24,7 +24,7 @@
 
 #waifu {
 	bottom: -1000px;
-	left: 0;
+	right: 0;
 	line-height: 0;
 	margin-bottom: -10px;
 	position: fixed;
@@ -68,9 +68,9 @@
 
 #live2d {
 	cursor: grab;
-	height: 380px;
+	height: 360px;
 	position: relative;
-	width: 380px;
+	width: 360px;
 }
 
 #live2d:active {
@@ -78,10 +78,10 @@
 }
 
 #waifu-tool {
-	color: #aaa;
+	color: rgb(18, 154, 149);
 	opacity: 0;
 	position: absolute;
-	right: 10px;
+	left: 10px;
 	top: 70px;
 	transition: opacity 1s;
 }
