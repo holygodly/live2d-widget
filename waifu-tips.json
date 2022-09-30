@@ -24,27 +24,21 @@
 		"selector": "#waifu-tool .fa-times",
 		"text": ["到了要说再见的时候了吗？", "呜呜 QAQ 后会有期……", "不要抛弃我呀……", "我们，还能再见面吗……", "哼，你会后悔的！"]
 	}, {
-		"selector": ".主页",
+		"selector": ".menu-item-home a",
 		"text": ["点击前往首页，想回到上一页可以使用浏览器的后退功能哦。", "点它就可以回到首页啦！", "回首页看看吧。"]
 	}, {
-		"selector": ".关于我",
+		"selector": ".menu-item-about a",
 		"text": ["你想知道我家主人是谁吗？", "这里有一些关于我家主人的秘密哦，要不要看看呢？", "发现主人出没地点！"]
 	}, {
-		"selector": ".menu-item-tags a",
+		"selector": ".tags a",
 		"text": ["点击就可以看文章的标签啦！", "点击来查看所有标签哦。"]
 	}, {
-		"selector": ".menu-item-categories a",
+		"selector": ".categories a",
 		"text": ["文章都分类好啦～", "点击来查看文章分类哦。"]
 	}, {
-		"selector": ".github",
-		"text": ["主人的github里啥都没有哦", "悄悄告诉你，主人的github里存过色图哦"]
-	},{
 		"selector": ".menu-item-archives a",
 		"text": ["翻页比较麻烦吗，那就来看看文章归档吧。", "文章目录都整理在这里啦！"]
 	}, {
-		"selector": ".steam",
-		"text": ["一起来玩游戏吧~", "主人玩游戏很厉害的哦~"]
-	},{
 		"selector": ".menu-item-friends a",
 		"text": ["这是我的朋友们哦ヾ(◍°∇°◍)ﾉﾞ", "要去大佬们的家看看吗？", "要去拜访一下我的朋友们吗？"]
 	}, {
@@ -82,7 +76,7 @@
 		"text": ["GitHub！我是新手！", "PHP 是最好的语言！"]
 	}, {
 		"selector": "a[href^='mailto']",
-		"text": ["邮件我会及时回复的（测试已上传）！", "点击就可以发送邮件啦～"]
+		"text": ["邮件我会及时回复的！(≧◡≦)", "点击就可以发送邮件啦～1.1.4"]
 	}, {
 		"selector": "a[href^='/tags/']",
 		"text": ["要去看看 <span>{text}</span> 标签么？", "点它可以查看此标签下的所有文章哟！"]
@@ -90,6 +84,29 @@
 		"selector": "a[href^='/categories/']",
 		"text": ["要去看看 <span>{text}</span> 分类么？", "点它可以查看此分类下的所有文章哟！"]
 	}, {
+		"selector": "a[href^='github']",
+		"text": ["主人的github里其实什么都没有哦", "悄悄告诉你，主人在github里存过色图哦~"]
+	},{
+		"selector": "a[href^='steam']",
+		"text": ["一起和主人玩游戏吧~~", "其实主人玩游戏一直很厉害的哦！"]
+	},{
+		"selector": "a[href^='twitter']",
+		"text": ["主人从来都不会上推特的(ↀωↀ)", "其实主人只有在想看色的时候上推特哦(„• ֊ •„)"]
+	},{
+		"selector": "a[href^='qq']",
+		"text": ["主人不喜欢用微信，只用QQ哦~", "QQ里其实藏着主人不为人知的一面 ⚆ᴥ⚆"]
+	},{
+		"selector": "a[href^='weibo']",
+		"text": ["那天主人跟我说他不用微博，只是放上来凑数的....", "点开主人微博，哇！什么都没有耶~"]
+	},{
+		"selector": "a[href^='/categories/']",
+		"text": ["主人总是在知乎装高手，你问怎么装？不说话装高手呗・ࡇ・", "主人的知乎，总是看一些奇奇怪怪的问题呢"]
+	},{
+		"selector": "a[href^='netease']",
+		"text": ["不得不说主人听歌还是挺有品味的呢", "要去听听主人喜欢的歌吗✪ω✪"]
+	},
+	
+	{
 		"selector": ".post-title-link",
 		"text": ["要看看 <span>{text}</span> 这篇文章吗？"]
 	}, {

@@ -1,0 +1,4 @@
+git status
+git add -A
+git commit -m "modify position to right"
+git push origin master
