@@ -170,7 +170,7 @@ function loadWidget(config) {
 		function initTips() {
 			$.ajax({
 				cache: true,
-				url: `${message_Path}waifu-tips.json`,
+				url: `${waifuPath}waifu-tips.json`,
 				dataType: "json",
 				success: function (result) {
 					$.each(result.mouseover, function (index, tips) {
