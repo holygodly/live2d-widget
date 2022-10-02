@@ -80,9 +80,6 @@
 	}, {
 		"selector": "div[class='article col s12 m6']",
 		"text": ["点击图片或文字就可以进入文章阅读哦~", "快进来读读看呀 ⁄(⁄ ⁄ ⁄ω⁄ ⁄ ⁄)⁄"]
-	},{
-		"selector": "div[class='title center-align']",
-		"text": ["主人，主人，主人！✧⁺⸜(●˙▾˙●)⸝⁺✧", "这是人家的主人哦！！(*˘▿˘✽)"]
 	},
 	
 	{
@@ -94,7 +91,7 @@
 		"text": ["点它就可以回到顶部啦！", "又回到最初的起点～", "要回到开始的地方么？"]
 	},{
 		"selector": "a[href^='mailto']",
-		"text": ["邮件我会及时回复的！(≧◡≦)", "点击就可以发送邮件啦～1.1.4"]
+		"text": ["邮件我会及时回复的！(≧◡≦)", "点击就可以发送邮件啦～"]
 	}, {
 		"selector": "em[class='github']",
 		"text": ["主人的github里其实什么都没有哦", "悄悄告诉你，主人在github里存过色图哦~"]
@@ -144,7 +141,7 @@
 		"selector": "a[itemprop='discussionUrl']",
 		"text": ["要去看看评论吗？"]
 	}, {
-		"selector": "footer[class='page-footer']",
+		"selector": ".beian a",
 		"text": ["我也是有户口的人哦。", "我的主人可是遵纪守法的好主人。"]
 	}, {
 		"selector": ".container a[href^='http'], .nav-link .nav-text",

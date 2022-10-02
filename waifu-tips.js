@@ -88,7 +88,7 @@ function loadWidget(config) {
 				document.getElementById("waifu-toggle").classList.add("waifu-toggle-active");
 			}, 3000);
 		});
-		const devtools = () => {};
+		const devtools = () => { };
 		console.log("%c", devtools);
 		devtools.toString = () => {
 			showMessage("哈哈，你打开了控制台，是想要看看我的小秘密吗？", 6000, 9);
@@ -166,125 +166,118 @@ function loadWidget(config) {
 			modelTexturesId = 53; // 材质 ID
 		}
 		loadModel(modelId, modelTexturesId);
-		fetch(waifuPath)
-			.then(response => response.json())
-			.then(result => {
-				window.addEventListener("mouseover", event => {
-					for (let { selector, text } of result.mouseover) {
-						if (!event.target.matches(selector)) continue;
-						text = randomSelection(text);
-						text = text.replace("{text}", event.target.innerText);
-						showMessage(text, 4000, 8);
-						return;
-					}
-				});
-				window.addEventListener("click", event => {
-					for (let { selector, text } of result.click) {
-						if (!event.target.matches(selector)) continue;
-						text = randomSelection(text);
-						text = text.replace("{text}", event.target.innerText);
-						showMessage(text, 4000, 8);
-						return;
-					}
-				});
-				result.seasons.forEach(({ date, text }) => {
-					const now = new Date(),
-						after = date.split("-")[0],
-						before = date.split("-")[1] || after;
-					if ((after.split("/")[0] <= now.getMonth() + 1 && now.getMonth() + 1 <= before.split("/")[0]) && (after.split("/")[1] <= now.getDate() && now.getDate() <= before.split("/")[1])) {
-						text = randomSelection(text);
-						text = text.replace("{year}", now.getFullYear());
-						//showMessage(text, 7000, true);
-						messageArray.push(text);
-					}
-				});
+
+		function initTips() {
+			$.ajax({
+				cache: true,
+				url: `${message_Path}waifu-tips.json`,
+				dataType: "json",
+				success: function (result) {
+					$.each(result.mouseover, function (index, tips) {
+						$(tips.selector).mouseover(function () {
+							var text = tips.text;
+							if (Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1) - 1];
+							text = text.renderTip({ text: $(this).text() });
+							showMessage(text, 3000);
+						});
+					});
+					$.each(result.click, function (index, tips) {
+						$(tips.selector).click(function () {
+							var text = tips.text;
+							if (Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1) - 1];
+							text = text.renderTip({ text: $(this).text() });
+							showMessage(text, 3000);
+						});
+					});
+				}
 			});
-	})();
+		}
+		initTips();
 
-	async function loadModelList() {
-		const response = await fetch(`${cdnPath}model_list.json`);
-		modelList = await response.json();
-	}
+		async function loadModelList() {
+			const response = await fetch(`${cdnPath}model_list.json`);
+			modelList = await response.json();
+		}
 
-	async function loadModel(modelId, modelTexturesId, message) {
-		localStorage.setItem("modelId", modelId);
-		localStorage.setItem("modelTexturesId", modelTexturesId);
-		showMessage(message, 4000, 10);
-		if (useCDN) {
-			if (!modelList) await loadModelList();
-			const target = randomSelection(modelList.models[modelId]);
-			loadlive2d("live2d", `${cdnPath}model/${target}/index.json`);
-		} else {
-			loadlive2d("live2d", `${apiPath}get/?id=${modelId}-${modelTexturesId}`);
-			console.log(`Live2D 模型 ${modelId}-${modelTexturesId} 加载完成`);
+		async function loadModel(modelId, modelTexturesId, message) {
+			localStorage.setItem("modelId", modelId);
+			localStorage.setItem("modelTexturesId", modelTexturesId);
+			showMessage(message, 4000, 10);
+			if (useCDN) {
+				if (!modelList) await loadModelList();
+				const target = randomSelection(modelList.models[modelId]);
+				loadlive2d("live2d", `${cdnPath}model/${target}/index.json`);
+			} else {
+				loadlive2d("live2d", `${apiPath}get/?id=${modelId}-${modelTexturesId}`);
+				console.log(`Live2D 模型 ${modelId}-${modelTexturesId} 加载完成`);
+			}
+		}
+
+		async function loadRandModel() {
+			const modelId = localStorage.getItem("modelId"),
+				modelTexturesId = localStorage.getItem("modelTexturesId");
+			if (useCDN) {
+				if (!modelList) await loadModelList();
+				const target = randomSelection(modelList.models[modelId]);
+				loadlive2d("live2d", `${cdnPath}model/${target}/index.json`);
+				showMessage("我的新衣服好看嘛？", 4000, 10);
+			} else {
+				// 可选 "rand"(随机), "switch"(顺序)
+				fetch(`${apiPath}rand_textures/?id=${modelId}-${modelTexturesId}`)
+					.then(response => response.json())
+					.then(result => {
+						if (result.textures.id === 1 && (modelTexturesId === 1 || modelTexturesId === 0)) showMessage("我还没有其他衣服呢！", 4000, 10);
+						else loadModel(modelId, result.textures.id, "我的新衣服好看嘛？");
+					});
+			}
+		}
+
+		async function loadOtherModel() {
+			let modelId = localStorage.getItem("modelId");
+			if (useCDN) {
+				if (!modelList) await loadModelList();
+				const index = (++modelId >= modelList.models.length) ? 0 : modelId;
+				loadModel(index, 0, modelList.messages[index]);
+			} else {
+				fetch(`${apiPath}switch/?id=${modelId}`)
+					.then(response => response.json())
+					.then(result => {
+						loadModel(result.model.id, 0, result.model.message);
+					});
+			}
 		}
 	}
-
-	async function loadRandModel() {
-		const modelId = localStorage.getItem("modelId"),
-			modelTexturesId = localStorage.getItem("modelTexturesId");
-		if (useCDN) {
-			if (!modelList) await loadModelList();
-			const target = randomSelection(modelList.models[modelId]);
-			loadlive2d("live2d", `${cdnPath}model/${target}/index.json`);
-			showMessage("我的新衣服好看嘛？", 4000, 10);
-		} else {
-			// 可选 "rand"(随机), "switch"(顺序)
-			fetch(`${apiPath}rand_textures/?id=${modelId}-${modelTexturesId}`)
-				.then(response => response.json())
-				.then(result => {
-					if (result.textures.id === 1 && (modelTexturesId === 1 || modelTexturesId === 0)) showMessage("我还没有其他衣服呢！", 4000, 10);
-					else loadModel(modelId, result.textures.id, "我的新衣服好看嘛？");
-				});
-		}
-	}
-
-	async function loadOtherModel() {
-		let modelId = localStorage.getItem("modelId");
-		if (useCDN) {
-			if (!modelList) await loadModelList();
-			const index = (++modelId >= modelList.models.length) ? 0 : modelId;
-			loadModel(index, 0, modelList.messages[index]);
-		} else {
-			fetch(`${apiPath}switch/?id=${modelId}`)
-				.then(response => response.json())
-				.then(result => {
-					loadModel(result.model.id, 0, result.model.message);
-				});
-		}
-	}
-}
 
 function initWidget(config, apiPath) {
-	if (typeof config === "string") {
-		config = {
-			waifuPath: config,
-			apiPath
-		};
-	}
-	document.body.insertAdjacentHTML("beforeend", `<div id="waifu-toggle">
+		if (typeof config === "string") {
+			config = {
+				waifuPath: config,
+				apiPath
+			};
+		}
+		document.body.insertAdjacentHTML("beforeend", `<div id="waifu-toggle">
 			<span>看板娘</span>
 		</div>`);
-	const toggle = document.getElementById("waifu-toggle");
-	toggle.addEventListener("click", () => {
-		toggle.classList.remove("waifu-toggle-active");
-		if (toggle.getAttribute("first-time")) {
-			loadWidget(config);
-			toggle.removeAttribute("first-time");
-		} else {
-			localStorage.removeItem("waifu-display");
-			document.getElementById("waifu").style.display = "";
+		const toggle = document.getElementById("waifu-toggle");
+		toggle.addEventListener("click", () => {
+			toggle.classList.remove("waifu-toggle-active");
+			if (toggle.getAttribute("first-time")) {
+				loadWidget(config);
+				toggle.removeAttribute("first-time");
+			} else {
+				localStorage.removeItem("waifu-display");
+				document.getElementById("waifu").style.display = "";
+				setTimeout(() => {
+					document.getElementById("waifu").style.bottom = 0;
+				}, 0);
+			}
+		});
+		if (localStorage.getItem("waifu-display") && Date.now() - localStorage.getItem("waifu-display") <= 86400000) {
+			toggle.setAttribute("first-time", true);
 			setTimeout(() => {
-				document.getElementById("waifu").style.bottom = 0;
+				toggle.classList.add("waifu-toggle-active");
 			}, 0);
+		} else {
+			loadWidget(config);
 		}
-	});
-	if (localStorage.getItem("waifu-display") && Date.now() - localStorage.getItem("waifu-display") <= 86400000) {
-		toggle.setAttribute("first-time", true);
-		setTimeout(() => {
-			toggle.classList.add("waifu-toggle-active");
-		}, 0);
-	} else {
-		loadWidget(config);
 	}
-}
