@@ -1,4 +1,5 @@
 git status
 git add -A
 git commit -m "modify position to right"
+git push --force https://github.com/holygodly/live2d-widget
 git push origin master

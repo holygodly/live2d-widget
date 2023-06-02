@@ -51,6 +51,9 @@
 		"selector": "a[href^='/bangumis']",
 		"text": ["这是我家主人天天躲在被窝里看的番哦", "要来一起追番吗？都是正经番！Ծ‸Ծ"]
 	},{
+		"selector": "li[class='card']",
+		"text": ["要去看看 <span>{text}</span> 么？", "去 <span>{text}</span> 逛逛吧。", "到 <span>{text}</span> 看看吧。"]
+	},{
 		"selector": "li[class='nav-show']",
 		"text": ["找不到想看的内容？搜索看看吧！", "在找什么东西呢，需要帮忙吗？"]
 	},{
