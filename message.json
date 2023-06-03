@@ -24,6 +24,9 @@
 		"selector": "#waifu-tool .fa-times",
 		"text": ["到了要说再见的时候了吗？", "呜呜 QAQ 后会有期……", "不要抛弃我呀……", "我们，还能再见面吗……", "哼，你会后悔的！"]
 	}, {
+		"selector": "div[id='articles']",
+		"text": ["要看看 <span>{text}</span> 这篇文章吗？", "嘻嘻，这些文章主人写挺好的呢~", "主人写这些文章废了好大功夫呢！"]
+	} {
 		"selector": "a[href^='/'],li[class='hide-on-med-and-down nav-item]",
 		"text": ["点击前往首页，想回到上一页可以使用浏览器的后退功能哦。", "点它就可以回到首页啦！", "回首页看看吧。"]
 	}, {
